@@ -2,6 +2,7 @@ from re import M
 import streamlit as st
 import pandas as pd
 import numpy as np
+import xgboost as xgb
 from PIL import Image
 
 st.set_page_config(
@@ -36,9 +37,13 @@ st.info("###### 1. Satisfaction level: Employee satisfaction point, which ranges
 
 st.success("###### Please enter the information of the employee for prediction from the left side bar and below")
 
+
+final = xgb.XGBClassifier()
+
 import pickle
 filename = 'model_xgb_tuned.pkl'
-model = pickle.load(open(filename, 'rb'))
+#model = pickle.load(open(filename, 'rb'))
+final.load_model(filename)
 
 
 col, col2 = st.columns([4, 4])
@@ -127,7 +132,9 @@ with col:
 
 with col2: 
     if st.button("Predict"):
-        pred = model.predict(df)
+        #pred = model.predict(df)
+        pred = final.predict(df)
+        
         if (pred[0].astype(int)) == 1:
             st.error("Your employee is very likely to leave the company")
         else:
