@@ -2,8 +2,9 @@ from re import M
 import streamlit as st
 import pandas as pd
 import numpy as np
-import xgboost as xgb
 from PIL import Image
+import xgboost as xgb
+import pickle
 
 st.set_page_config(
     page_title="Employee Churn Prediction",
@@ -40,7 +41,6 @@ st.success("###### Please enter the information of the employee for prediction f
 
 final = xgb.XGBClassifier()
 
-import pickle
 filename = 'model_xgb_tuned.pkl'
 #model = pickle.load(open(filename, 'rb'))
 final.load_model(filename)
